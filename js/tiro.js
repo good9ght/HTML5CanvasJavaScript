@@ -70,5 +70,6 @@ Tiro.prototype = {
 
   retangulosColisao: function() {
     return [{x: this.x, y: this.y, largura: this.largura, altura: this.altura}];
-  }
+},
+    colidiuCom: function() {}
 }

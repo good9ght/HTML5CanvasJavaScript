@@ -1,82 +1,113 @@
 document.addEventListener('DOMContentLoaded', function() {
+    let canvas = document.getElementById("canvas");
+    let contexto = canvas.getContext("2d");
+    let imagens = {
+        espaco: 'img/fundo-espaco.png',
+        estrelas: 'img/fundo-estrelas.png',
+        nuvens: 'img/fundo-nuvens.png',
+        nave: 'img/nave.png',
+        ovni: 'img/ovni.png',
+    }
+    let imagensCarregadas = 0;
+    let totalImagens = 0;
+    let animacao;
+    let teclado;
+    let fundoEspaco;
+    let fundoNuvens;
+    let fundoEstrelas;
+    let nave;
+    let colisor;
+    let criadorInimigos;
 
-  let imagensCarregadas = 0;
-  let totalImagens = 5;
 
-  let imgEspaco = new Image();
-  imgEspaco.src = "img/fundo-espaco.png";
-  let imgEstrelas = new Image();
-  imgEstrelas.src = "img/fundo-estrelas.png";
-  let imgNuvens = new Image();
-  imgNuvens.src = "img/fundo-nuvens.png";
-  let imgNave = new Image();
-  imgNave.src = "img/nave.png";
-  let imgOvni = new Image();
-  imgOvni.src = "img/ovni.png";
+    function carregarImagens() {
+        for(let key in imagens) {
+            let img = new Image();
+            img.src = imagens[key];
+            imagens[key] = img;
+            totalImagens++;
+        }
+    }
+
+    function carregando() {
+        imagensCarregadas++;
+        if(imagensCarregadas == totalImagens) iniciarObjetos();
+    }
+
+    function iniciarObjetos() {
+        animacao = new Animacao(contexto);
+        teclado = new Teclado(document);
+        colisor = new Colisor();
+
+        fundoEspaco = new Fundo(contexto, imagens.espaco);
+        fundoEstrelas = new Fundo(contexto, imagens.estrelas);
+        fundoNuvens = new Fundo(contexto, imagens.nuvens);
+        nave = new Nave(contexto, teclado, imagens.nave);
+
+        animacao.novoSprite(fundoEspaco);
+        animacao.novoSprite(fundoEstrelas);
+        animacao.novoSprite(fundoNuvens);
+        animacao.novoSprite(nave);
 
 
-  let canvas = document.getElementById("canvas");
-  let contexto = canvas.getContext("2d")
+        colisor.novoSprite(nave);
+        animacao.novoProcessamento(colisor);
 
-  let animacao = new Animacao(contexto);
-  let teclado = new Teclado(document);
+        configuracoesIniciais();
+    }
 
-  let fundoEspaco = new Fundo(contexto, imgEspaco);
-  let fundoNuvens = new Fundo(contexto, imgNuvens);
-  let fundoEstrelas = new Fundo(contexto, imgEstrelas);
-  let nave = new Nave(contexto, teclado, imgNave);
-  let colisor = new Colisor();
+    function configuracoesIniciais() {
+        // Fundos
+        fundoEspaco.velocidade = 3;
+        fundoNuvens.velocidade = 5;
+        fundoEstrelas.velocidade = 10;
 
-  imgEspaco.onload = carregando;
-  imgNuvens.onload = carregando;
-  imgEstrelas.onload = carregando;
-  imgNave.onload = carregando;
-  imgOvni.onload = carregando;
+        // Nave
+        nave.x = canvas.width / 2 - imagens.nave.width / 2;
+        nave.y = canvas.height - imagens.nave.height;
+        nave.velocidade = 5;
 
-  function carregando() {
-    imagensCarregadas++;
-    if(imagensCarregadas == totalImagens) iniciar();
-  }
+        teclado.disparou(ESPACO, function() { nave.atirar(); });
 
-  function iniciar() {
-    fundoEspaco.velocidade = 3;
-    fundoNuvens.velocidade = 7;
-    fundoEstrelas.velocidade = 10;
+        animacao.ligar();
+    }
 
-    nave.x = canvas.width / 2 - imgNave.width / 2;
-    nave.y = canvas.height - imgNave.height;
-    nave.velocidade = 5;
+    function criacaoInimigos() {
+        criadorInimigos = {
+            ultimoOvni: new Date().getTime(),
+            processar: function() {
+                let agora = new Date().getTime();
+                decorrido = agora - this.ultimoOvni;
 
-    teclado.disparou(ESPACO, function() {
-      nave.atirar();
-    });
+                if(decorrido > 1000) {
+                    novoOvni();
+                    this.ultimoOvni = agora;
+                }
+            }
+        };
+        animacao.novoProcessamento(criadorInimigos);
+    }
 
-    animacao.novoProcessamento(colisor);
+    function novoOvni() {
+        let ovni = new Ovni(imagens.ovni, contexto);
 
-    colisor.novoSprite(nave);
+        // Mínimo: 5; máximo: 20
+        ovni.velocidade = Math.floor(5 + Math.random() * (20 - 5 + 1));
+        // Mínimo: 0;
+        // máximo: largura do canvas - largura do ovni
+        ovni.x = Math.floor(Math.random() * (canvas.width - imagens.ovni.width + 1));
+        ovni.y = + imagens.ovni.height;
 
-    animacao.novoSprite(fundoEspaco);
-    animacao.novoSprite(fundoNuvens);
-    animacao.novoSprite(fundoEstrelas);
-    animacao.novoSprite(nave);
-    animacao.ligar();
+        animacao.novoSprite(ovni);
+        colisor.novoSprite(ovni);
+    }
 
-    setInterval(novoOvni, 1000);
-  }
+    function aleatorio(min, max) {
+        return min + Math.floor(Math.random() * (max - min + 1));
+    }
 
-  function novoOvni() {
-    let ovni = new Ovni(imgOvni, contexto);
-
-    ovni.velocidade = Math.floor(5 + Math.random() * (20 - 5 + 1));
-    ovni.x = Math.floor(Math.random() * (canvas.width - imgOvni.width + 1));
-    ovni.y = + imgOvni.height;
-
-    animacao.novoSprite(ovni);
-    colisor.novoSprite(ovni);
-  }
-
-  function aleatorio(min, max) {
-    return min + Math.floor(Math.random() * (max - min + 1));
-  }
+    carregarImagens();
+    iniciarObjetos();
+    criacaoInimigos();
 
 }, false);
