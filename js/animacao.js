@@ -3,6 +3,8 @@ function Animacao(contexto) {
   this.sprites = []; // os sprites são objetos
   this.ligado = false;
   this.processamentos = [];
+  this.spritesExcluir = [];
+  this.processamentosExcluir = [];
 }
 
 Animacao.prototype = {
@@ -40,8 +42,12 @@ Animacao.prototype = {
       this.sprites[i].desenhar();
 
     // Processamentos gerais
-    for(let i in this.processamentos)
-      this.processamentos[i].processar();
+    for(let i in this.processamentos) {
+        this.processamentos[i].processar();
+    }
+
+    // Processamento de exclusões
+    this.processarExclusoes();
 
     let animacao = this;
     // Chamando o proximo ciclo
@@ -62,5 +68,34 @@ Animacao.prototype = {
     let alturaCanvas  = contexto.canvas.height; // fim - altura
 
     contexto.clearRect(x, y, larguraCanvas, alturaCanvas);
+  },
+  excluirSprite: function(sprite) {
+    this.spritesExcluir.push(sprite);
+  },
+  excluirProcessamento: function(processamento) {
+    this.processamentosExcluir.push(sprite);
+  },
+  processarExclusoes: function() {
+    let novosSprites = [];
+    let novosProcessamentos = [];
+
+    // Adiciona somente se não estiver no array de excluidos
+    for(let i in this.sprites) {
+      if(this.spritesExcluir.indexOf(this.sprites[i]) == -1) {
+        novosSprites.push(this.sprites[i]);
+      }
+    }
+
+    for(let i in this.processamentos) {
+      if(this.processamentosExcluir.indexOf(this.processamentos[i]) == -1)
+        novosProcessamentos.push(this.processamentos[i]);
+
+    // Limpar os arrays de exclusões
+    this.spritesExcluir = [];
+    this.processamentosExcluir = [];
+
+    this.sprites = novosSprites;
+    this.processamentos = novosProcessamentos;
+    }
   }
 }
