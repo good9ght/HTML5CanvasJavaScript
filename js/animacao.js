@@ -5,6 +5,8 @@ function Animacao(contexto) {
   this.processamentos = [];
   this.spritesExcluir = [];
   this.processamentosExcluir = [];
+  this.ultimoCiclo = 0;
+  this.decorrido = 0;
 }
 
 Animacao.prototype = {
@@ -31,6 +33,10 @@ Animacao.prototype = {
     // Pode desligar?
     if (!this.ligado) return; // se verdadeiro, a execução para
 
+    let agora = new Date().getTime();
+    if (this.ultimoCiclo == 0) this.ultimoCiclo = agora;
+    this.decorrido = agora - this.ultimoCiclo;
+
     // esse 'for' percorre somente os elementos definidos do array,
     // utilizando a propriedade length o 'for' irá percorrer todas as posições
     // Atualizando o estado dos Sprites
@@ -43,11 +49,15 @@ Animacao.prototype = {
 
     // Processamentos gerais
     for(let i in this.processamentos) {
+        console.log(this.processamentos);
         this.processamentos[i].processar();
     }
 
     // Processamento de exclusões
     this.processarExclusoes();
+
+    // Atualizar o instante do último ciclo
+    this.ultimoCiclo = agora;
 
     let animacao = this;
     // Chamando o proximo ciclo
@@ -86,9 +96,12 @@ Animacao.prototype = {
       }
     }
 
-    for(let i in this.processamentos) {
-      if(this.processamentosExcluir.indexOf(this.processamentos[i]) == -1)
-        novosProcessamentos.push(this.processamentos[i]);
+    for(let j in this.processamentos) {
+        if(this.processamentosExcluir.indexOf(this.processamentos[j]) == -1) {
+            novosProcessamentos.push(this.processamentos[j]);
+        }
+    }
+     console.log(novosProcessamentos);
 
     // Limpar os arrays de exclusões
     this.spritesExcluir = [];
@@ -97,5 +110,4 @@ Animacao.prototype = {
     this.sprites = novosSprites;
     this.processamentos = novosProcessamentos;
     }
-  }
 }

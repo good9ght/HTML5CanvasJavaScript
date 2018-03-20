@@ -58,21 +58,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function configuracoesIniciais() {
         // Fundos
-        fundoEspaco.velocidade = 3;
-        fundoNuvens.velocidade = 5;
-        fundoEstrelas.velocidade = 10;
+        fundoEspaco.velocidade = 60;
+        fundoNuvens.velocidade = 150;
+        fundoEstrelas.velocidade = 500;
 
         // Nave
         nave.x = canvas.width / 2 - imagens.nave.width / 2;
         nave.y = canvas.height - imagens.nave.height;
-        nave.velocidade = 5;
+        nave.velocidade = 200;
 
-        teclado.disparou(ESPACO, function() { nave.atirar(); });
+        // Inimigos
+        gerarInimigos();
+
+        teclado.disparou(ESPACO, () => { nave.atirar(); });
 
         animacao.ligar();
     }
 
-    function criacaoInimigos() {
+    function gerarInimigos() {
         criadorInimigos = {
             ultimoOvni: new Date().getTime(),
             processar: function() {
@@ -89,25 +92,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function novoOvni() {
-        let ovni = new Ovni(imagens.ovni, contexto);
-
+        let imgOvni = imagens.ovni;
+        let ovni = new Ovni(imgOvni, contexto);
         // Mínimo: 5; máximo: 20
-        ovni.velocidade = Math.floor(5 + Math.random() * (20 - 5 + 1));
+        ovni.velocidade = Math.floor( 5 + Math.random() * (20 - 5 + 1));
         // Mínimo: 0;
         // máximo: largura do canvas - largura do ovni
-        ovni.x = Math.floor(Math.random() * (canvas.width - imagens.ovni.width + 1));
-        ovni.y = + imagens.ovni.height;
-
+        ovni.x = Math.floor(Math.random() * (canvas.width - imgOvni.width + 1));
+        // Descontar a altura
+        ovni.y = -imgOvni.height;
         animacao.novoSprite(ovni);
         colisor.novoSprite(ovni);
     }
 
-    function aleatorio(min, max) {
-        return min + Math.floor(Math.random() * (max - min + 1));
-    }
-
     carregarImagens();
     iniciarObjetos();
-    criacaoInimigos();
 
 }, false);
