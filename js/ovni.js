@@ -8,7 +8,8 @@ function Ovni(imagem, contexto) {
 
 Ovni.prototype = {
   atualizar: function() {
-    this.y += this.velocidade;
+
+    this.y += this.velocidade * ( this.animacao.decorrido / 1000 );
 
     // Se o ovni chegar ao fim da tela será excluido
     if(this.y > this.contexto.canvas.height) {

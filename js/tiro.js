@@ -3,25 +3,27 @@ function Tiro(contexto, teclado, nave) {
   this.nave = nave;
   this.teclado = teclado;
 
-  this.cor = "red";
+  this.cor = "yellow";
   this.largura = 4;
-  this.altura = 20;
+  this.altura = 15;
   this.x = nave.x + nave.imagem.width / 2 - this.largura / 2;
   this.y = nave.y - this.altura;
 
-  this.velocidadeY = 10;
+  this.velocidadePadrao = 10;
+  this.velocidadePadrao;
+  this.velocidadeY = this.velocidadePadrao;
   this.velocidadeX = 0;
 
   if(this.teclado.pressionada(SETA_ESQUERDA)) {
       if(this.teclado.pressionada(SETA_ACIMA))
-          this.velocidadeX = 10;
+          this.velocidadeX = this.velocidadePadrao;
 
       else if(this.teclado.pressionada(SETA_ABAIXO))
-          this.velocidadeX = -10;
+          this.velocidadeX = -this.velocidadePadrao;
 
       else if(this.teclado.pressionada(SHIFT)) {
           this.velocidadeY = 0;
-          this.velocidadeX = 10;
+          this.velocidadeX = this.velocidadePadrao;
           this.largura = 20;
           this.altura = 4;
           this.y = nave.y + (nave.imagem.height / 2);
@@ -31,14 +33,14 @@ function Tiro(contexto, teclado, nave) {
 
   if(this.teclado.pressionada(SETA_DIREITA)) {
       if(this.teclado.pressionada(SETA_ACIMA))
-          this.velocidadeX = -10;
+          this.velocidadeX = -this.velocidadePadrao;
 
       else if(this.teclado.pressionada(SETA_ABAIXO))
-          this.velocidadeX = +10;
+          this.velocidadeX = +this.velocidadePadrao;
 
       else if(this.teclado.pressionada(SHIFT)) {
           this.velocidadeY = 0;
-          this.velocidadeX = -10;
+          this.velocidadeX = -this.velocidadePadrao;
           this.largura = 20;
           this.altura = 4;
           this.y = nave.y + (nave.imagem.height / 2);
@@ -49,8 +51,8 @@ function Tiro(contexto, teclado, nave) {
 
 Tiro.prototype = {
   atualizar: function() {
-    this.y -= this.velocidadeY;
-    this.x -= this.velocidadeX;
+    this.y -= this.velocidadeY * ( this.animacao.decorrido / 1000 );
+    this.x -= this.velocidadeX * ( this.animacao.decorrido / 1000 );
 
     // se o tiro passar do começo da tela será excluido
     if(this.y < -this.altura) {

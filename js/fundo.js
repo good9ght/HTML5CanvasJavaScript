@@ -7,7 +7,7 @@ function Fundo(contexto, imagem) {
 
 Fundo.prototype = {
   atualizar: function() {
-    this.posicaoEmenda += this.velocidade;
+    this.posicaoEmenda += this.velocidade * ( this.animacao.decorrido / 1000 );
 
     if (this.posicaoEmenda > this.imagem.height)
       this.posicaoEmenda = 0;

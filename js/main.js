@@ -58,21 +58,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function configuracoesIniciais() {
         // Fundos
-        fundoEspaco.velocidade = 3;
-        fundoNuvens.velocidade = 5;
-        fundoEstrelas.velocidade = 10;
+        fundoEspaco.velocidade = 60;
+        fundoNuvens.velocidade = 150;
+        fundoEstrelas.velocidade = 500;
 
         // Nave
         nave.x = canvas.width / 2 - imagens.nave.width / 2;
         nave.y = canvas.height - imagens.nave.height;
-        nave.velocidade = 5;
+        nave.velocidade = 200;
+
+        // Inimigos
+        gerarInimigos();
 
         teclado.disparou(ESPACO, function() { nave.atirar(); });
 
         animacao.ligar();
     }
 
-    function criacaoInimigos() {
+    function gerarInimigos() {
         criadorInimigos = {
             ultimoOvni: new Date().getTime(),
             processar: function() {
@@ -102,12 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
         colisor.novoSprite(ovni);
     }
 
-    function aleatorio(min, max) {
-        return min + Math.floor(Math.random() * (max - min + 1));
-    }
-
     carregarImagens();
     iniciarObjetos();
-    criacaoInimigos();
 
 }, false);
