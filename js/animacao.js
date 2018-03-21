@@ -6,7 +6,7 @@ function Animacao(contexto) {
   this.spritesExcluir = [];
   this.processamentosExcluir = [];
   this.ultimoCiclo = 0;
-  this.decorrido = 0;
+  this.tempoDecorrido = 0;
 }
 
 Animacao.prototype = {
@@ -49,7 +49,6 @@ Animacao.prototype = {
 
     // Processamentos gerais
     for(let i in this.processamentos) {
-        console.log(this.processamentos);
         this.processamentos[i].processar();
     }
 
@@ -101,7 +100,6 @@ Animacao.prototype = {
             novosProcessamentos.push(this.processamentos[j]);
         }
     }
-     console.log(novosProcessamentos);
 
     // Limpar os arrays de exclusões
     this.spritesExcluir = [];

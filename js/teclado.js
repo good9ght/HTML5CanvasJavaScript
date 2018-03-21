@@ -1,14 +1,14 @@
 // SETAS
-// let SETA_ESQUERDA = 37;
-// let SETA_DIREITA = 39;
-// let SETA_ACIMA = 38;
-// let SETA_ABAIXO = 40;
+let SETA_ESQUERDA = 37;
+let SETA_DIREITA = 39;
+let SETA_ACIMA = 38;
+let SETA_ABAIXO = 40;
 
 // W A S D
-var SETA_ESQUERDA = 65;
-var SETA_DIREITA = 68;
-var SETA_ACIMA = 87;
-var SETA_ABAIXO = 83;
+// var SETA_ESQUERDA = 65;
+// var SETA_DIREITA = 68;
+// var SETA_ACIMA = 87;
+// var SETA_ABAIXO = 83;
 var ESPACO = 32;
 var SHIFT = 16;
 

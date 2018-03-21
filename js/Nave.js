@@ -6,27 +6,49 @@ function Nave(contexto, teclado, imagem) {
     this.y = 0;
     this.velocidade = 0;
     this.vidas = 3;
+    this.spritesheet = new Spritesheet(contexto, imagem, 3,2);
+    this.spritesheet.linha = 0;
+    this.spritesheet.intervalo = 100;
+    this.imgWidth = 36;
+    this.imgHeght = 48;
 }
 
 Nave.prototype = {
     atualizar: function() {
-        // px/s  - pixels por segundo
-        let incremento = this.velocidade * (this.animacao.decorrido / 1000);
+
+        let incremento = this.velocidade * ( this.animacao.decorrido / 1000 );
+
         if(this.teclado.pressionada(SETA_ESQUERDA) && this.x > 0)
             this.x -= incremento;
 
-        if(this.teclado.pressionada(SETA_DIREITA) && this.x < this.contexto.canvas.width - this.imagem.width)
+        if(this.teclado.pressionada(SETA_DIREITA) && this.x < this.contexto.canvas.width - this.imgWidth)
             this.x += incremento;
 
         if(this.teclado.pressionada(SETA_ACIMA) && this.y > 0)
             this.y -= incremento;
 
-        if(this.teclado.pressionada(SETA_ABAIXO) && this.y < this.contexto.canvas.height - this.imagem.height)
+        if(this.teclado.pressionada(SETA_ABAIXO) && this.y < this.contexto.canvas.height - this.imgHeght)
             this.y += incremento;
+
     },
 
     desenhar: function() {
-        this.contexto.drawImage(this.imagem, this.x, this.y, this.imagem.width, this.imagem.height);
+        if (this.teclado.pressionada(SETA_ESQUERDA)) {
+          this.spritesheet.linha = 1;
+            console.log("esquerda");
+            this.spritesheet.log();
+        }
+        if (this.teclado.pressionada(SETA_DIREITA)) {
+          this.spritesheet.linha = 2;
+          console.log("direita");
+          this.spritesheet.log();
+        }
+        else {
+          this.spritesheet.linha = 0;
+        }
+
+        this.spritesheet.desenhar(this.x, this.y);
+        this.spritesheet.proximoQuadro();
     },
 
     atirar: function() {
@@ -69,20 +91,20 @@ Nave.prototype = {
     colidiuCom: function(outro) {
         if(outro instanceof Ovni) {
 
-        this.morrer();
-        this.destruirInimigo();
+            this.morrer();
+            this.destruirInimigo();
 
-        if(this.vidas < 0 ) {
-            this.animacao.desligar();
-            alert("SE FODEU");
-        }
-        else {
-            this.recomecar();
+            if(this.vidas < 1 ) {
+                this.animacao.desligar();
+                alert("SE FODEU");
+            }
+            else {
+                this.recomecar();
             }
         }
     },
     recomecar: function() {
-        nave.x = this.contexto.canvas.canvas.width / 2 - imagens.nave.width / 2;
-        nave.y = this.contexto.canvas.canvas.height - imagens.nave.height;
+      this.x = this.contexto.canvas.width / 2 - 18;
+      this.y = this.contexto.canvas.height - 48;
     }
 }
