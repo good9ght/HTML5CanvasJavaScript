@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         espaco: 'img/fundo-espaco.png',
         estrelas: 'img/fundo-estrelas.png',
         nuvens: 'img/fundo-nuvens.png',
-        nave: 'img/nave.png',
+        nave: 'img/nave-spritesheet.png',
         ovni: 'img/ovni.png',
     }
     let imagensCarregadas = 0;
@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
         fundoEstrelas.velocidade = 500;
 
         // Nave
-        nave.x = canvas.width / 2 - imagens.nave.width / 2;
-        nave.y = canvas.height - imagens.nave.height;
+        nave.x = canvas.width / 2 - 18;
+        nave.y = canvas.height - 48;
         nave.velocidade = 200;
 
         // Inimigos

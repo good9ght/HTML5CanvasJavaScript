@@ -6,26 +6,40 @@ function Nave(contexto, teclado, imagem) {
     this.y = 0;
     this.velocidade = 0;
     this.vidas = 3;
+    this.spritesheet = new Spritesheet(contexto, imagem, 3,2);
+    this.imgWidth = 36;
+    this.imgHeght = 48;
 }
 
 Nave.prototype = {
     atualizar: function() {
+
         let incremento = this.velocidade * ( this.animacao.decorrido / 1000 );
+
         if(this.teclado.pressionada(SETA_ESQUERDA) && this.x > 0)
             this.x -= incremento;
 
-        if(this.teclado.pressionada(SETA_DIREITA) && this.x < this.contexto.canvas.width - this.imagem.width)
+        if(this.teclado.pressionada(SETA_DIREITA) && this.x < this.contexto.canvas.width - this.imgWidth)
             this.x += incremento;
 
         if(this.teclado.pressionada(SETA_ACIMA) && this.y > 0)
             this.y -= incremento;
 
-        if(this.teclado.pressionada(SETA_ABAIXO) && this.y < this.contexto.canvas.height - this.imagem.height)
+        if(this.teclado.pressionada(SETA_ABAIXO) && this.y < this.contexto.canvas.height - this.imgHeght)
             this.y += incremento;
+
     },
 
     desenhar: function() {
-        this.contexto.drawImage(this.imagem, this.x, this.y, this.imagem.width, this.imagem.height);
+        if (this.teclado.pressionada(SETA_ESQUERDA))
+          this.spritesheet.linha = 1
+        if (this.teclado.pressionada(SETA_DIREITA))
+          this.spritesheet.linha = 2
+        else
+          this.spritesheet.linha = 0;
+
+        this.spritesheet.desenhar(this.x, this.y);
+        this.spritesheet.proximoQuadro();
     },
 
     atirar: function() {
@@ -81,7 +95,7 @@ Nave.prototype = {
         }
     },
     recomecar: function() {
-        this.x = this.contexto.canvas.width / 2 - 18;
-        this.y = this.contexto.canvas.height - 48;
+      nave.x = this.contexto.canvas.width / 2 - 18;
+      nave.y = this.contexto.canvas.height - 48;
     }
 }

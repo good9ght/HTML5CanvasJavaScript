@@ -6,7 +6,7 @@ function Tiro(contexto, teclado, nave) {
   this.cor = "yellow";
   this.largura = 4;
   this.altura = 15;
-  this.x = nave.x + nave.imagem.width / 2 - this.largura / 2;
+  this.x = nave.x + 18;
   this.y = nave.y - this.altura;
 
   this.velocidadePadrao = 10;
