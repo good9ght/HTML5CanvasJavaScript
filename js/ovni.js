@@ -1,9 +1,10 @@
-function Ovni(imagem, contexto) {
+function Ovni(imagem, contexto, imgExplosao) {
   this.imagem = imagem;
   this.contexto = contexto;
   this.x = 0;
   this.y = 0;
   this.velocidade = 0;
+  this.imgExplosao = imgExplosao;
 }
 
 Ovni.prototype = {
@@ -55,10 +56,15 @@ Ovni.prototype = {
 
   colidiuCom: function(outro) {
       if (outro instanceof Tiro) {
+        // Removendo a nave e o tiro da tela
         this.animacao.excluirSprite(this);
         this.colisor.excluirSprite(this);
         this.animacao.excluirSprite(outro);
         this.colisor.excluirSprite(outro);
+
+        // Explosão
+        let explosao = new Explosao(this.contexto, this.imgExplosao, this.x, this.y);
+        this.animacao.novoSprite(explosao);
       }
   }
 }

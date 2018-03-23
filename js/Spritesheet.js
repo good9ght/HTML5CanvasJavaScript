@@ -8,6 +8,7 @@ function Spritesheet(contexto, imagem, linhas, colunas) {
   this.coluna = 0;
   this.larguraQuadro;
   this.alturaQuadro;
+  this.fimDoCliclo = null;
 }
 
 Spritesheet.prototype = {
@@ -32,6 +33,9 @@ Spritesheet.prototype = {
     else{
       // voltará para a primeira
       this.coluna = 0;
+
+      // Quando acabar o ciclo
+      if(this.fimDoCliclo) this.fimDoCliclo();
     }
   },
   desenhar: function(x, y) {

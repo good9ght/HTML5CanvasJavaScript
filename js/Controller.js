@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         nuvens: 'img/fundo-nuvens.png',
         nave: 'img/nave-spritesheet.png',
         ovni: 'img/ovni.png',
+        explosao: 'img/explosao.png',
     }
     let imagensCarregadas = 0;
     let totalImagens = 0;
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         nave.velocidade = 200;
 
         // Inimigos
-        // gerarInimigos();
+        gerarInimigos();
 
         teclado.disparou(ESPACO, () => { nave.atirar(); });
 
@@ -93,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function novoOvni() {
         let imgOvni = imagens.ovni;
-        let ovni = new Ovni(imgOvni, contexto);
+        let ovni = new Ovni(imgOvni, contexto, imagens.explosao);
         // Mínimo: 5; máximo: 20
         ovni.velocidade = Math.floor( 5 + Math.random() * (20 - 5 + 1));
         // Mínimo: 0;
