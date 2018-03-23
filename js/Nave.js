@@ -6,11 +6,11 @@ function Nave(contexto, teclado, imagem) {
     this.y = 0;
     this.velocidade = 0;
     this.vidas = 3;
+    this.imgWidth = 36;
+    this.imgHeght = 48;
     this.spritesheet = new Spritesheet(contexto, imagem, 3,2);
     this.spritesheet.linha = 0;
     this.spritesheet.intervalo = 100;
-    this.imgWidth = 36;
-    this.imgHeght = 48;
 }
 
 Nave.prototype = {
@@ -35,13 +35,9 @@ Nave.prototype = {
     desenhar: function() {
         if (this.teclado.pressionada(SETA_ESQUERDA)) {
           this.spritesheet.linha = 1;
-            console.log("esquerda");
-            this.spritesheet.log();
         }
-        if (this.teclado.pressionada(SETA_DIREITA)) {
+        else if (this.teclado.pressionada(SETA_DIREITA)) {
           this.spritesheet.linha = 2;
-          console.log("direita");
-          this.spritesheet.log();
         }
         else {
           this.spritesheet.linha = 0;

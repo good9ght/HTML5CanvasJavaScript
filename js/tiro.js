@@ -14,39 +14,7 @@ function Tiro(contexto, teclado, nave) {
   this.velocidadeY = this.velocidadePadrao;
   this.velocidadeX = 0;
 
-  if(this.teclado.pressionada(SETA_ESQUERDA)) {
-      if(this.teclado.pressionada(SETA_ACIMA))
-          this.velocidadeX = this.velocidadePadrao;
-
-      else if(this.teclado.pressionada(SETA_ABAIXO))
-          this.velocidadeX = -this.velocidadePadrao;
-
-      else if(this.teclado.pressionada(SHIFT)) {
-          this.velocidadeY = 0;
-          this.velocidadeX = this.velocidadePadrao;
-          this.largura = 20;
-          this.altura = 4;
-          this.y = nave.y + (nave.imagem.height / 2);
-          this.x = nave.x - nave.imagem.width/2;
-      }
-  }
-
-  if(this.teclado.pressionada(SETA_DIREITA)) {
-      if(this.teclado.pressionada(SETA_ACIMA))
-          this.velocidadeX = -this.velocidadePadrao;
-
-      else if(this.teclado.pressionada(SETA_ABAIXO))
-          this.velocidadeX = +this.velocidadePadrao;
-
-      else if(this.teclado.pressionada(SHIFT)) {
-          this.velocidadeY = 0;
-          this.velocidadeX = -this.velocidadePadrao;
-          this.largura = 20;
-          this.altura = 4;
-          this.y = nave.y + (nave.imagem.height / 2);
-          this.x = nave.x + nave.imagem.width;
-      }
-  }
+  this.executar();
 }
 
 Tiro.prototype = {
@@ -72,6 +40,41 @@ Tiro.prototype = {
 
   retangulosColisao: function() {
     return [{x: this.x, y: this.y, largura: this.largura, altura: this.altura}];
-},
-    colidiuCom: function() {}
+  },
+  executar: function() {
+    if(this.teclado.pressionada(SETA_ESQUERDA)) {
+        if(this.teclado.pressionada(SETA_ACIMA))
+            this.velocidadeX = this.velocidadePadrao;
+
+        else if(this.teclado.pressionada(SETA_ABAIXO))
+            this.velocidadeX = -this.velocidadePadrao;
+
+        else if(this.teclado.pressionada(SHIFT)) {
+            this.velocidadeY = 0;
+            this.velocidadeX = this.velocidadePadrao;
+            this.largura = 20;
+            this.altura = 4;
+            this.y = nave.y + (nave.imagem.height / 2);
+            this.x = nave.x - nave.imagem.width/2;
+        }
+    }
+
+    if(this.teclado.pressionada(SETA_DIREITA)) {
+        if(this.teclado.pressionada(SETA_ACIMA))
+            this.velocidadeX = -this.velocidadePadrao;
+
+        else if(this.teclado.pressionada(SETA_ABAIXO))
+            this.velocidadeX = +this.velocidadePadrao;
+
+        else if(this.teclado.pressionada(SHIFT)) {
+            this.velocidadeY = 0;
+            this.velocidadeX = -this.velocidadePadrao;
+            this.largura = 20;
+            this.altura = 4;
+            this.y = nave.y + (nave.imagem.height / 2);
+            this.x = nave.x + nave.imagem.width;
+        }
+    }
+  },
+  colidiuCom: function() {}
 }

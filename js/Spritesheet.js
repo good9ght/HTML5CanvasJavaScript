@@ -50,15 +50,5 @@ Spritesheet.prototype = {
       this.larguraQuadro,
       this.alturaQuadro
     );
-  },
-  log: function() {
-    console.log(
-      {
-        larguraQuadro: this.larguraQuadro,
-        alturaQuadro: this.alturaQuadro,
-        x: this.larguraQuadro * this.coluna,
-        y: this.alturaQuadro * this.linha
-      }
-    );
   }
 }
