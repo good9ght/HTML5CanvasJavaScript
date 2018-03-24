@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ovni: 'img/ovni.png',
         explosao: 'img/explosao.png',
     }
+    let musicaAcao;
     let imagensCarregadas = 0;
     let totalImagens = 0;
     let animacao;
@@ -28,6 +29,15 @@ document.addEventListener('DOMContentLoaded', function() {
             imagens[key] = img;
             totalImagens++;
         }
+    }
+
+    function carregarMusicas() {
+      musicaAcao = new Audio();
+      musicaAcao.src = 'snd/musica-acao.mp3';
+      musicaAcao.load();
+      musicaAcao.volume = 0.4;
+      musicaAcao.loop = true;
+      musicaAcao.play();
     }
 
     function carregando() {
@@ -144,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     carregarImagens();
+    carregarMusicas();
     iniciarObjetos();
 
 }, false);
