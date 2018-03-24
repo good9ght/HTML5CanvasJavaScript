@@ -1,4 +1,4 @@
-function Nave(contexto, teclado, imagem) {
+function Nave(contexto, teclado, imagem, imgExplosao) {
     this.contexto = contexto;
     this.teclado = teclado;
     this.imagem = imagem;
@@ -11,6 +11,7 @@ function Nave(contexto, teclado, imagem) {
     this.spritesheet = new Spritesheet(contexto, imagem, 3,2);
     this.spritesheet.linha = 0;
     this.spritesheet.intervalo = 100;
+    this.imgExplosao = imgExplosao;
 }
 
 Nave.prototype = {
@@ -77,26 +78,32 @@ Nave.prototype = {
 
         return retangulos;
     },
-    morrer: function() {
-        this.vidas--;
-    },
-    destruirInimigo: function(inimigo) {
-        this.animacao.excluirSprite(inimigo);
-        this.colisor.excluirSprite(inimigo);
-    },
     colidiuCom: function(outro) {
+        // Se colidiu com um Ovni...
         if(outro instanceof Ovni) {
 
-            this.morrer();
-            this.destruirInimigo();
+            this.animacao.excluirSprite(outro);
+            this.colisor.excluirSprite(outro);
 
+            let explosao1 = new Explosao(
+              this.contexto, this.imgExplosao, outro.x, outro.y);
+
+            let explosao2 = new Explosao(
+              this.contexto, this.imgExplosao, this.x, this.y);
+
+            this.animacao.novoSprite(explosao1);
+            this.animacao.novoSprite(explosao2);
+
+            let nave = this;
+            this.vidas--;
             if(this.vidas < 1 ) {
-                this.animacao.desligar();
+              explosao1.fimDaExplosao = function() {
+                nave.animacao.desligar();
                 alert("SE FODEU");
+              }
             }
-            else {
-                this.recomecar();
-            }
+
+            this.recomecar();
         }
     },
     recomecar: function() {

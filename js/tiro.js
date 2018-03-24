@@ -1,4 +1,4 @@
-function Tiro(contexto, teclado, nave) {
+cfunction Tiro(contexto, teclado, nave) {
   this.contexto = contexto;
   this.nave = nave;
   this.teclado = teclado;

@@ -21,6 +21,7 @@ Animacao.prototype = {
   },
 
   ligar: function() {
+    this.ultimoCiclo = 0;
     this.ligado = true;
     this.proximoFrame();
   },

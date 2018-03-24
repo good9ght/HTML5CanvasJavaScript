@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fundoEspaco = new Fundo(contexto, imagens.espaco);
         fundoEstrelas = new Fundo(contexto, imagens.estrelas);
         fundoNuvens = new Fundo(contexto, imagens.nuvens);
-        nave = new Nave(contexto, teclado, imagens.nave);
+        nave = new Nave(contexto, teclado, imagens.nave, imagens.explosao);
 
         animacao.novoSprite(fundoEspaco);
         animacao.novoSprite(fundoEstrelas);
@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
         gerarInimigos();
 
         teclado.disparou(ESPACO, () => { nave.atirar(); });
+        teclado.disparou(ENTER, pausarJogo)
 
         animacao.ligar();
     }
@@ -90,6 +91,42 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
         animacao.novoProcessamento(criadorInimigos);
+    }
+
+    function pausarJogo() {
+      // Pausa
+      if(animacao.ligado) {
+        animacao.desligar();
+        ativarTiro(false);
+
+        // Escrever "Pausado"
+        contexto.save();
+        contexto.fillStyle = "white";
+        contexto.strokeStyle = "black";
+        contexto.font = "50px sans-serif";
+        contexto.fillText("Pausado", 160, 200);
+        contexto.strokeText("Pausado", 160, 200);
+        contexto.restore();
+      }
+      else {
+
+        // Impede que um inimigo seja gerado logo após 'despausar'
+        criadorInimigos.ultimoOvni = new Date();
+
+        ativarTiro(true);
+        animacao.ligar();
+      }
+    }
+
+    function ativarTiro(ativar) {
+      if(ativar) {
+        teclado.disparou(ESPACO, function() {
+          nave.atirar();
+        })
+      }
+      else {
+        teclado.disparou(ESPACO, null);
+      }
     }
 
     function novoOvni() {
