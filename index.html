@@ -2,8 +2,8 @@
 <html>
   <head>
     <title>Game</title>
-		<script src="js/Controller.js"></script>
-        <script src="js/Nave.js"></script>
+    <link href='css/style.css' type="text/css" rel="stylesheet">
+    <script src="js/Nave.js"></script>
 		<script src="js/Spritesheet.js"></script>
 		<script src="js/animacao.js"></script>
 		<script src="js/tiro.js"></script>
@@ -12,8 +12,214 @@
 		<script src="js/fundo.js"></script>
 		<script src="js/ovni.js"></script>
 		<script src="js/Explosao.js"></script>
+		<script src="js/Painel.js"></script>
   </head>
   <body>
-	<canvas id="canvas" width="500" height="500"></canvas>
+	   <canvas id="canvas" width="500" height="500"></canvas>
+     <a id='link-jogar' href='javascript: iniciarJogo()'>Start</a>
+
+     <script type="text/javascript">
+       let canvas = document.getElementById("canvas");
+       let contexto = canvas.getContext("2d");
+       let imagens = {
+           espaco: 'img/fundo-espaco.png',
+           estrelas: 'img/fundo-estrelas.png',
+           nuvens: 'img/fundo-nuvens.png',
+           nave: 'img/nave-spritesheet.png',
+           ovni: 'img/ovni.png',
+           explosao: 'img/explosao.png',
+       }
+       let musicaAcao;
+       let imagensCarregadas = 0;
+       let totalImagens = 0;
+       let animacao;
+       let teclado;
+       let fundoEspaco;
+       let fundoNuvens;
+       let fundoEstrelas;
+       let nave;
+       let colisor;
+       let criadorInimigos;
+       let painel;
+
+       // Começa carregando as imagens e músicas
+       carregarImagens();
+       carregarMusicas();
+
+       function carregarImagens() {
+           for(let key in imagens) {
+               let img = new Image();
+               img.src = imagens[key];
+               img.onload = carregando;
+               totalImagens++;
+               imagens[key] = img;
+           }
+       }
+
+       function carregarMusicas() {
+         musicaAcao = new Audio();
+         musicaAcao.src = 'snd/musica-acao.mp3';
+         musicaAcao.load();
+         musicaAcao.volume = 0;
+         musicaAcao.loop = true;
+       }
+
+       function carregando() {
+           contexto.save();
+           // Fundo
+           contexto.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
+
+           // Texto "Carregando"
+           contexto.fillStyle = 'white';
+           contexto.strokeStyle = 'black';
+           contexto.font = '50px sans-serif';
+           contexto.fillText("Loading...", 150, 200);
+           contexto.strokeText("Loading...", 150, 200);
+
+           imagensCarregadas++;
+
+           // Barra de Loading
+           let tamanhoTotal = 300;
+           let tamanhoBarra = imagensCarregadas / totalImagens * tamanhoTotal;
+           contexto.fillStyle = 'yellow';
+           contexto.fillRect(100, 250, tamanhoBarra, 50);
+
+           contexto.restore();
+
+           if(imagensCarregadas == totalImagens) {
+             iniciarObjetos();
+             mostrarLinkJogar();
+           }
+       }
+
+       function iniciarObjetos() {
+           animacao = new Animacao(contexto);
+           teclado = new Teclado(document);
+           colisor = new Colisor();
+
+           fundoEspaco = new Fundo(contexto, imagens.espaco);
+           fundoEstrelas = new Fundo(contexto, imagens.estrelas);
+           fundoNuvens = new Fundo(contexto, imagens.nuvens);
+           nave = new Nave(contexto, teclado, imagens.nave, imagens.explosao);
+           painel = new Painel(contexto, nave);
+
+           animacao.novoSprite(fundoEspaco);
+           animacao.novoSprite(fundoEstrelas);
+           animacao.novoSprite(fundoNuvens);
+
+           animacao.novoSprite(painel);
+           animacao.novoSprite(nave);
+
+
+           colisor.novoSprite(nave);
+           animacao.novoProcessamento(colisor);
+
+           configuracoesIniciais();
+       }
+
+       function configuracoesIniciais() {
+           // Fundos
+           fundoEspaco.velocidade = 60;
+           fundoNuvens.velocidade = 150;
+           fundoEstrelas.velocidade = 500;
+
+           // Nave
+           nave.posicionar();
+           nave.velocidade = 200;
+
+           // Game Over
+           nave.acabaramVidas = function() {
+               animacao.desligar();
+               alert("SE FODEU")
+           }
+
+           // Inimigos
+           gerarInimigos();
+       }
+
+       function gerarInimigos() {
+           criadorInimigos = {
+               ultimoOvni: new Date().getTime(),
+               processar: function() {
+                   let agora = new Date().getTime();
+                   decorrido = agora - this.ultimoOvni;
+
+                   if(decorrido > 1000) {
+                       novoOvni();
+                       this.ultimoOvni = agora;
+                   }
+               }
+           };
+           animacao.novoProcessamento(criadorInimigos);
+       }
+
+       function pausarJogo() {
+         // Pausa
+         if(animacao.ligado) {
+           animacao.desligar();
+           ativarTiro(false);
+           musicaAcao.pause();
+
+           // Escrever "Pause"
+           contexto.save();
+           contexto.fillStyle = "white";
+           contexto.strokeStyle = "black";
+           contexto.font = "50px sans-serif";
+           contexto.fillText("Pause", 160, 200);
+           contexto.strokeText("Pause", 160, 200);
+           contexto.restore();
+         }
+         else {
+
+           // Impede que um inimigo seja gerado logo após 'despausar'
+           criadorInimigos.ultimoOvni = new Date();
+
+           ativarTiro(true);
+           animacao.ligar();
+           musicaAcao.play();
+         }
+       }
+
+       function ativarTiro(ativar) {
+         if(ativar) {
+           teclado.disparou(ESPACO, function() {
+             nave.atirar();
+           })
+         }
+         else {
+           teclado.disparou(ESPACO, null);
+         }
+       }
+
+       function novoOvni() {
+           let imgOvni = imagens.ovni;
+           let ovni = new Ovni(imgOvni, contexto, imagens.explosao);
+           // Mínimo: 5; máximo: 20
+           ovni.velocidade = Math.floor( 5 + Math.random() * (20 - 5 + 1));
+           // Mínimo: 0;
+           // máximo: largura do canvas - largura do ovni
+           ovni.x = Math.floor(Math.random() * (canvas.width - imgOvni.width + 1));
+           // Descontar a altura
+           ovni.y = -imgOvni.height;
+           animacao.novoSprite(ovni);
+           colisor.novoSprite(ovni);
+       }
+
+       function mostrarLinkJogar() {
+           document.querySelector('#link-jogar').style.display = "block";
+       }
+
+       function esconderLinkJogar() {
+           document.querySelector('#link-jogar').style.display = "none";
+       }
+
+       function iniciarJogo() {
+           esconderLinkJogar();
+           musicaAcao.play();
+           animacao.ligar();
+           ativarTiro(true);
+           teclado.disparou(ENTER, pausarJogo);
+       }
+     </script>
   </body>
 </html>

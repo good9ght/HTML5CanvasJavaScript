@@ -10,8 +10,8 @@ Colisor.prototype = {
   },
 
   processar: function() {
-
-    let jaTestados = {};
+    // Inicio com um objeto vazio
+    let jaTestados = new Object();
 
     for (let i in this.sprites) {
       for (let j in this.sprites) {
@@ -38,8 +38,6 @@ Colisor.prototype = {
           jaTestados[id2].push(id1);
         }
 
-        // Abstrair a colisão
-        this.testarColisao(this.sprites[i], this.sprites[j]);
       }
     }
     this.processarExclusoes();

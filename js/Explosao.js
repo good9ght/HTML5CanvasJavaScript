@@ -1,6 +1,6 @@
 const SOM_EXPLOSAO = new Audio();
 SOM_EXPLOSAO.src = 'snd/explosao.mp3';
-SOM_EXPLOSAO.volume = 0.4;
+SOM_EXPLOSAO.volume = 0;
 SOM_EXPLOSAO.load();
 
 function Explosao(contexto, imagem, x, y) {

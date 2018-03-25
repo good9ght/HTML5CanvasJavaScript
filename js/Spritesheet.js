@@ -6,8 +6,6 @@ function Spritesheet(contexto, imagem, linhas, colunas) {
   this.intervalo = 0;
   this.linha = 0;
   this.coluna = 0;
-  this.larguraQuadro;
-  this.alturaQuadro;
   this.fimDoCliclo = null;
 }
 
@@ -17,9 +15,7 @@ Spritesheet.prototype = {
     let agora = new Date().getTime();
 
     // Se não tem o ultimo tempo medido
-    if(!this.ultimoTempo) {
-      this.ultimoTempo = agora;
-    }
+    if(!this.ultimoTempo) this.ultimoTempo = agora;
 
     // Se é hora de mudar de coluna
     if(agora - this.ultimoTempo < this.intervalo) return;
@@ -37,22 +33,26 @@ Spritesheet.prototype = {
       // Quando acabar o ciclo
       if(this.fimDoCliclo) this.fimDoCliclo();
     }
+
+    // Guardar hora da última mudança
+    this.ultimoTempo = agora;
+
   },
   desenhar: function(x, y) {
-    this.larguraQuadro = this.imagem.width / this.colunas;
-    this.alturaQuadro = this.imagem.height / this.linhas;
+    let larguraQuadro = this.imagem.width / this.colunas;
+    let alturaQuadro = this.imagem.height / this.linhas;
 
 
     this.contexto.drawImage(
       this.imagem,
-      this.larguraQuadro * this.coluna,
-      this.alturaQuadro * this.linha,
-      this.larguraQuadro,
-      this.alturaQuadro,
+      larguraQuadro * this.coluna,
+      alturaQuadro * this.linha,
+      larguraQuadro,
+      alturaQuadro,
       x,
       y,
-      this.larguraQuadro,
-      this.alturaQuadro
+      larguraQuadro,
+      alturaQuadro
     );
   }
 }

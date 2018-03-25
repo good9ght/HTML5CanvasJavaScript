@@ -106,6 +106,7 @@ Animacao.prototype = {
     this.spritesExcluir = [];
     this.processamentosExcluir = [];
 
+    // Substituir os arrays velhos pelos novos
     this.sprites = novosSprites;
     this.processamentos = novosProcessamentos;
     }
