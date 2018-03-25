@@ -1,6 +1,6 @@
 const SOM_TIRO = new Audio();
 SOM_TIRO.src = 'snd/tiro.mp3';
-SOM_TIRO.volume = 0;
+SOM_TIRO.volume = 0.2;
 SOM_TIRO.load();
 
 function Tiro(contexto, teclado, nave) {
@@ -14,7 +14,7 @@ function Tiro(contexto, teclado, nave) {
   this.x = nave.x + 18;
   this.y = nave.y - this.altura;
 
-  this.velocidadePadrao = 10;
+  this.velocidadePadrao = 500;
   this.velocidadePadrao;
   this.velocidadeY = this.velocidadePadrao;
   this.velocidadeX = 0;
@@ -63,8 +63,8 @@ Tiro.prototype = {
             this.velocidadeX = this.velocidadePadrao;
             this.largura = 20;
             this.altura = 4;
-            this.y = nave.y + (nave.imagem.height / 2);
-            this.x = nave.x - nave.imagem.width/2;
+            this.x = nave.x - 2;
+            this.y = nave.y - (this.altura * -2);
         }
     }
 
@@ -80,8 +80,8 @@ Tiro.prototype = {
             this.velocidadeX = -this.velocidadePadrao;
             this.largura = 20;
             this.altura = 4;
-            this.y = nave.y + (nave.imagem.height / 2);
-            this.x = nave.x + nave.imagem.width;
+            this.x = nave.x + 18;
+            this.y = nave.y - (this.altura * -2);
         }
     }
   },

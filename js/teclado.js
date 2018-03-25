@@ -12,6 +12,8 @@ const SETA_ABAIXO = 83;
 const ESPACO = 32;
 const SHIFT = 16;
 const ENTER = 13;
+const IGUAL = 187;
+const MENOS = 189;
 
 
 function Teclado(elemento) {
