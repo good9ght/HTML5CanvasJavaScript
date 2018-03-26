@@ -1,22 +1,24 @@
-function Nave(contexto, teclado, imagem, imgExplosao) {
-    this.contexto = contexto;
-    this.teclado = teclado;
-    this.imagem = imagem;
-    this.x = 0;
-    this.y = 0;
-    this.velocidade = 0;
-    this.spritesheet = new Spritesheet(contexto, imagem, 3,2);
-    this.spritesheet.linha = 0;
-    this.spritesheet.intervalo = 100;
-    this.imgExplosao = imgExplosao;
-    this.acabaramVidas = null;
-    this.vidas = 3;
-    this.imgWidth = 36;
-    this.imgHeght = 48;
-}
+class Nave {
 
-Nave.prototype = {
-    atualizar: function() {
+    constructor(contexto, teclado, imagem, imgExplosao) {
+        this.contexto = contexto;
+        this.teclado = teclado;
+        this.imagem = imagem;
+        this.x = 0;
+        this.y = 0;
+        this.velocidade = 0;
+        this.spritesheet = new Spritesheet(contexto, imagem, 3,2);
+        this.spritesheet.linha = 0;
+        this.spritesheet.intervalo = 100;
+        this.imgExplosao = imgExplosao;
+        this.acabaramVidas = null;
+        this.vidas = 3;
+        this.imgWidth = 36;
+        this.imgHeght = 48;
+    }
+
+
+    atualizar() {
 
         let incremento = this.velocidade * this.animacao.decorrido / 1000;
 
@@ -32,30 +34,30 @@ Nave.prototype = {
         if(this.teclado.pressionada(SETA_ABAIXO) && this.y < this.contexto.canvas.height - this.imgHeght)
             this.y += incremento;
 
-    },
+    }
 
-    desenhar: function() {
+    desenhar() {
         if (this.teclado.pressionada(SETA_ESQUERDA)) {
-          this.spritesheet.linha = 1;
+            this.spritesheet.linha = 1;
         }
         else if (this.teclado.pressionada(SETA_DIREITA)) {
-          this.spritesheet.linha = 2;
+            this.spritesheet.linha = 2;
         }
         else {
-          this.spritesheet.linha = 0;
+            this.spritesheet.linha = 0;
         }
 
         this.spritesheet.desenhar(this.x, this.y);
         this.spritesheet.proximoQuadro();
-    },
+    }
 
-    atirar: function() {
+    atirar() {
         let tiro = new Tiro(this.contexto, this.teclado, this);
         this.animacao.novoSprite(tiro);
         this.colisor.novoSprite(tiro);
-    },
+    }
 
-    retangulosColisao: function() {
+    retangulosColisao() {
         let retangulos =
         [
             {x: this.x + 2,  y: this.y + 19, largura: 9,  altura: 13},
@@ -78,41 +80,43 @@ Nave.prototype = {
         // }
 
         return retangulos;
-    },
-    colidiuCom: function(outro) {
+    }
+
+    colidiuCom(outro) {
         // Se colidiu com um Ovni...
         if(outro instanceof Ovni) {
 
-          let nave = this;
-          this.animacao.excluirSprite(outro);
-          this.colisor.excluirSprite(outro);
-          this.animacao.excluirSprite(nave);
-          this.colisor.excluirSprite(nave);
+            let nave = this;
+            this.animacao.excluirSprite(outro);
+            this.colisor.excluirSprite(outro);
+            this.animacao.excluirSprite(nave);
+            this.colisor.excluirSprite(nave);
 
-          let explosaoNave = new Explosao(
-            this.contexto, this.imgExplosao, outro.x, outro.y);
+            let explosaoNave = new Explosao(
+                this.contexto, this.imgExplosao, outro.x, outro.y);
 
-          let explosao2 = new Explosao(
-            this.contexto, this.imgExplosao, this.x, this.y);
+            let explosao2 = new Explosao(
+                this.contexto, this.imgExplosao, this.x, this.y);
 
-          this.animacao.novoSprite(explosaoNave);
-          this.animacao.novoSprite(explosao2);
+            this.animacao.novoSprite(explosaoNave);
+            this.animacao.novoSprite(explosao2);
 
-          explosaoNave.fimDaExplosao = function() {
-            nave.vidas--;
-            if(nave.vidas < 0 ) {
-              if (nave.acabaramVidas) nave.acabaramVidas();
+            explosaoNave.fimDaExplosao = function() {
+                nave.vidas--;
+                if(nave.vidas < 0 ) {
+                    if (nave.acabaramVidas) nave.acabaramVidas();
+                }
+                else {
+                    nave.animacao.novoSprite(nave);
+                    nave.colisor.novoSprite(nave);
+                    nave.posicionar();
+                }
             }
-            else {
-              nave.animacao.novoSprite(nave);
-              nave.colisor.novoSprite(nave);
-              nave.posicionar();
-            }
-          }
         }
-    },
-    posicionar: function() {
-      this.x = this.contexto.canvas.width / 2 - 18;
-      this.y = this.contexto.canvas.height - 48;
+    }
+
+    posicionar() {
+        this.x = this.contexto.canvas.width / 2 - 18;
+        this.y = this.contexto.canvas.height - 48;
     }
 }

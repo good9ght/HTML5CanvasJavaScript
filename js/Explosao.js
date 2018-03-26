@@ -3,30 +3,31 @@ SOM_EXPLOSAO.src = 'snd/explosao.mp3';
 SOM_EXPLOSAO.volume = 0.3;
 SOM_EXPLOSAO.load();
 
-function Explosao(contexto, imagem, x, y) {
-  this.spritesheet = new Spritesheet(contexto, imagem, 1, 5);
-  this.spritesheet.intervalo = 75;
-  this.x = x;
-  this.y = y;
-  this.fimDaExplosao = null;
+class Explosao {
 
-  var explosao = this;
+    constructor(contexto, imagem, x, y) {
+        this.spritesheet = new Spritesheet(contexto, imagem, 1, 5);
+        this.spritesheet.intervalo = 75;
+        this.x = x;
+        this.y = y;
+        this.fimDaExplosao = null;
 
-  this.spritesheet.fimDoCliclo = function() {
-    explosao.animacao.excluirSprite(explosao);
-    if(explosao.fimDaExplosao) explosao.fimDaExplosao();
-  }
+        var explosao = this;
 
-  SOM_EXPLOSAO.currentTime = 0;
-  SOM_EXPLOSAO.play();
+        this.spritesheet.fimDoCliclo = function() {
+            explosao.animacao.excluirSprite(explosao);
+            if(explosao.fimDaExplosao) explosao.fimDaExplosao();
+        }
 
-}
+        SOM_EXPLOSAO.currentTime = 0;
+        SOM_EXPLOSAO.play();
 
-Explosao.prototype = {
-  atualizar: function() {
-  },
-  desenhar: function() {
-    this.spritesheet.desenhar(this.x, this.y);
-    this.spritesheet.proximoQuadro();
-  }
+    }
+
+    atualizar() {}
+
+    desenhar() {
+        this.spritesheet.desenhar(this.x, this.y);
+        this.spritesheet.proximoQuadro();
+    }
 }

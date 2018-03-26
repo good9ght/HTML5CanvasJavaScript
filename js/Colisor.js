@@ -1,17 +1,18 @@
-function Colisor() {
-    this.sprites = [];
-    this.spritesExcluir = [];
-    this.aoColidir = null;
-}
+class Colisor {
 
-Colisor.prototype = {
-    novoSprite: function(sprite) {
+    constructor() {
+        this.sprites = [];
+        this.spritesExcluir = [];
+        this.aoColidir = null;
+    }
+
+    novoSprite(sprite) {
         this.sprites.push(sprite);
         sprite.colisor = this;
-    },
+    }
 
-    processar: function() {
-    // Inicio com um objeto vazio
+    processar() {
+        // Inicio com um objeto vazio
         let jaTestados = new Object();
 
         for (let i in this.sprites) {
@@ -38,12 +39,12 @@ Colisor.prototype = {
                     jaTestados[id1].push(id2);
                     jaTestados[id2].push(id1);
                 }
-
             }
         }
         this.processarExclusoes();
-    },
-    testarColisao: function(sprite1, sprite2) {
+    }
+
+    testarColisao(sprite1, sprite2) {
         // Obter os retangulos de colisão de cada sprite
         // devolvem arrays com dados dos retangulo
         let retangulos1 = sprite1.retangulosColisao();
@@ -55,7 +56,6 @@ Colisor.prototype = {
             for (let j in retangulos2) {
                 // Ainda abstraindo a fórmula
                 if (this.retangulosColidem(retangulos1[i], retangulos2[j])) {
-
                     // Se houver colisão irá notificar
                     sprite1.colidiuCom(sprite2);
                     sprite2.colidiuCom(sprite1);
@@ -67,16 +67,17 @@ Colisor.prototype = {
                 }
             }
         }
-    },
+    }
 
-    retangulosColidem: function(retangulos1, retangulos2) {
+    retangulosColidem(retangulos1, retangulos2) {
         // Retorna se houve ou não interseção entre os retangulos
         return (retangulos1.x + retangulos1.largura) > retangulos2.x &&
             retangulos1.x < (retangulos2.x + retangulos2.largura) &&
             (retangulos1.y + retangulos1.altura) > retangulos2.y &&
             retangulos1.y < (retangulos2.y + retangulos2.altura);
-    },
-    stringUnica: function(sprite) {
+    }
+
+    stringUnica(sprite) {
         // retorna o objeto 'convertido' em String
         let str = 1;
         let retangulos = sprite.retangulosColisao();
@@ -88,11 +89,13 @@ Colisor.prototype = {
             "a:" + retangulos[i].altura + "\n";
         }
         return str;
-    },
-    excluirSprite: function(sprite) {
+    }
+
+    excluirSprite(sprite) {
         this.spritesExcluir.push(sprite);
-    },
-    processarExclusoes: function() {
+    }
+
+    processarExclusoes() {
         let novoArray = [];
 
         for(let i in this.sprites) {
@@ -104,4 +107,5 @@ Colisor.prototype = {
         this.spritesExcluir = [];
         this.sprites = novoArray;
     }
+
 }

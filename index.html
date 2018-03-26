@@ -5,20 +5,20 @@
     <link href='css/style.css' type="text/css" rel="stylesheet">
     <script src="js/Nave.js"></script>
 		<script src="js/Spritesheet.js"></script>
-		<script src="js/animacao.js"></script>
-		<script src="js/tiro.js"></script>
-		<script src="js/teclado.js"></script>
-		<script src="js/colisor.js"></script>
-		<script src="js/fundo.js"></script>
-		<script src="js/ovni.js"></script>
+		<script src="js/Animacao.js"></script>
+		<script src="js/Tiro.js"></script>
+		<script src="js/Teclado.js"></script>
+		<script src="js/Colisor.js"></script>
+		<script src="js/Fundo.js"></script>
+		<script src="js/Ovni.js"></script>
 		<script src="js/Explosao.js"></script>
 		<script src="js/Painel.js"></script>
   </head>
   <body>
 	   <canvas id="canvas" width="500" height="500"></canvas>
-     <a id='link-jogar' href='javascript: startGame()'>Start</a>
+       <a id='link-jogar' href='javascript: startGame()'>Start</a>
 
-     <script type="text/javascript">
+       <script type="text/javascript">
        let canvas = document.getElementById("canvas");
        let contexto = canvas.getContext("2d");
        let imagens = {
@@ -256,6 +256,8 @@
 
            // Fundo
            contexto.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
+
+           removerInimigos();
 
            // Texto "SE FODEU"
            contexto.save();
