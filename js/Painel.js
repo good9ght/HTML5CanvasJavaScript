@@ -1,17 +1,17 @@
-function Painel(contexto, nave) {
-    this.contexto = contexto;
-    this.nave = nave;
-    this.pontuacao = 0;
-    this.spritesheet = new Spritesheet(contexto, nave.imagem, 3, 2);
-    this.spritesheet.linha = 0;
-    this.spritesheet.coluna = 0;
-}
+class Painel {
 
-Painel.prototype = {
-    atualizar: function() {
+    constructor(contexto, nave) {
+        this.contexto = contexto;
+        this.nave = nave;
+        this.pontuacao = 0;
+        this.spritesheet = new Spritesheet(contexto, nave.imagem, 3, 2);
+        this.spritesheet.linha = 0;
+        this.spritesheet.coluna = 0;
+    }
 
-    },
-    desenhar: function() {
+    atualizar() {}
+
+    desenhar() {
         // Reduz o desenho pela metade
         this.contexto.scale(0.5, 0.5);
 
