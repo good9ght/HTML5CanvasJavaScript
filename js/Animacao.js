@@ -60,11 +60,10 @@ class Animacao {
         // Atualizar o instante do último ciclo
         this.ultimoCiclo = agora;
 
-        let animacao = this;
         // Chamando o proximo ciclo
-        requestAnimationFrame(function() {
+        requestAnimationFrame(() => {
             // chamando a função em outro escopo
-            animacao.proximoFrame();
+            this.proximoFrame();
         });
 
     }
@@ -115,5 +114,5 @@ class Animacao {
         this.sprites = novosSprites;
         this.processamentos = novosProcessamentos;
     }
-    
+
 }
