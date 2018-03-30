@@ -1,13 +1,13 @@
 let canvas = document.querySelector("#meu-canvas");
 let contexto = canvas.getContext("2d");
 let imagens = {
-        espaco: 'img/fundo-espaco.png',
-        estrelas: 'img/fundo-estrelas.png',
-        nuvens: 'img/fundo-nuvens.png',
-        nave: 'img/nave-spritesheet.png',
-        ovni: 'img/ovni.png',
-        explosao: 'img/explosao.png',
-    }
+    espaco: 'img/fundo-espaco.png',
+    estrelas: 'img/fundo-estrelas.png',
+    nuvens: 'img/fundo-nuvens.png',
+    nave: 'img/nave-spritesheet.png',
+    ovni: 'img/ovni.png',
+    explosao: 'img/explosao.png',
+}
 
 let musicaAcao;
 let imagensCarregadas = 0;
