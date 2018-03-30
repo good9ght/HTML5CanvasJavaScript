@@ -3,7 +3,7 @@
   <head>
     <title>Game</title>
     <link href='css/style.css' type="text/css" rel="stylesheet">
-    <script src="js/Nave.js"></script>
+        <script src="js/Nave.js"></script>
 		<script src="js/Spritesheet.js"></script>
 		<script src="js/Animacao.js"></script>
 		<script src="js/Tiro.js"></script>
@@ -15,11 +15,11 @@
 		<script src="js/Painel.js"></script>
   </head>
   <body>
-	   <canvas id="canvas" width="500" height="500"></canvas>
-       <a id='link-jogar' href='javascript: startGame()'>Start</a>
+      <canvas id="meu-canvas" width="500" height="500"></canvas>
+      <button id='link-jogar' onClick="startGame()">Start</a>
 
        <script type="text/javascript">
-       let canvas = document.getElementById("canvas");
+       let canvas = document.querySelector("#meu-canvas");
        let contexto = canvas.getContext("2d");
        let imagens = {
            espaco: 'img/fundo-espaco.png',
@@ -60,7 +60,7 @@
          musicaAcao = new Audio();
          musicaAcao.src = 'snd/musica-acao.mp3';
          musicaAcao.load();
-         musicaAcao.volume = 0.2;
+         musicaAcao.volume = 0;
          musicaAcao.loop = true;
        }
 
@@ -254,10 +254,11 @@
            musicaAcao.pause();
            musicaAcao.currentTime = 0.0;
 
-           // Fundo
-           contexto.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
-
+           // Remove os inimigos
            removerInimigos();
+
+          // Fundo
+          contexto.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
 
            // Texto "SE FODEU"
            contexto.save();
@@ -275,8 +276,6 @@
            nave.posicionar;
            animacao.novoSprite(nave);
            colisor.novoSprite(nave);
-
-           removerInimigos();
        }
 
     function removerInimigos() {
