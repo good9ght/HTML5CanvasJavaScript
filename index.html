@@ -16,9 +16,10 @@
   </head>
   <body>
       <canvas id="meu-canvas" width="500" height="500"></canvas>
-      <button id='link-jogar' onClick="startGame()">Start</a>
+      <button id='botao-start' onClick="startGame()">Start</a>
 
        <script type="text/javascript">
+
        let canvas = document.querySelector("#meu-canvas");
        let contexto = canvas.getContext("2d");
        let imagens = {
@@ -29,6 +30,7 @@
            ovni: 'img/ovni.png',
            explosao: 'img/explosao.png',
        }
+
        let musicaAcao;
        let imagensCarregadas = 0;
        let totalImagens = 0;
@@ -212,11 +214,11 @@
        }
 
        function mostrarLinkJogar() {
-           document.querySelector('#link-jogar').style.display = "block";
+           document.querySelector('#botao-start').style.display = "block";
        }
 
        function esconderLinkJogar() {
-           document.querySelector('#link-jogar').style.display = "none";
+           document.querySelector('#botao-start').style.display = "none";
        }
 
        function startGame() {
@@ -255,34 +257,38 @@
            musicaAcao.currentTime = 0.0;
 
            // Remove os inimigos
-           removerInimigos();
+           removerInimigos().then(() => {
+               // Fundo
+               contexto.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
 
-          // Fundo
-          contexto.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
+               // Texto "SE FODEU"
+               contexto.save();
+               contexto.fillStyle = 'white';
+               contexto.strokeStyle = 'black';
+               contexto.font = '70px sans-serif';
+               contexto.fillText('SE FODEU', 70, 200);
+               contexto.strokeText('SE FODEU', 70, 200);
+               contexto.restore();
 
-           // Texto "SE FODEU"
-           contexto.save();
-           contexto.fillStyle = 'white';
-           contexto.strokeStyle = 'black';
-           contexto.font = '70px sans-serif';
-           contexto.fillText('SE FODEU', 70, 200);
-           contexto.strokeText('SE FODEU', 70, 200);
-           contexto.restore();
+               // botão "Start"
+               mostrarLinkJogar();
 
-           // botão "Start"
-           mostrarLinkJogar();
-
-           nave.vidas = 3;
-           nave.posicionar;
-           animacao.novoSprite(nave);
-           colisor.novoSprite(nave);
+               nave.vidas = 3;
+               nave.posicionar;
+               animacao.novoSprite(nave);
+               colisor.novoSprite(nave);
+           });
        }
 
     function removerInimigos() {
-        for(let i in animacao.sprites) {
-            if(animacao.sprites[i] instanceof Ovni)
-                animacao.excluirSprite(animacao.sprites[i]);
-        }
+        return new Promise((resolve, reject) => {
+            for(let i in animacao.sprites) {
+                if(animacao.sprites[i] instanceof Ovni)
+                    animacao.excluirSprite(animacao.sprites[i]);
+
+                if(i == animacao.sprites.length-1) resolve();
+            }
+        });
     }
      </script>
   </body>

@@ -5,45 +5,40 @@ body {
 }
 
 #meu-canvas {
-    border: 1px solid red;
     position: absolute;
     left: 50%;
     top: 50%;
     margin-left: -250px;
-    margin-top: -250px;
+    margin-top: -300px;
 }
 
-#link-jogar {
-  /* Inicia oculto */
-  display: none;
+#botao-start {
+    /* Inicia oculto */
+    display: none;
 
-  width:70px;
-  height: 70px;
-  border-radius: 70px;
-  border: none;
-  box-shadow: 1px 1px 1px black;
-  background: red;
-  cursor: pointer;
+    width:70px;
+    height: 70px;
+    border-radius: 70px;
+    border: none;
+    box-shadow: 1px 1px 1px black;
+    background: red;
+    position: absolute;
+    left: 42%;
+    top: 55%;
+    margin-left: 70px;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
 
-  font: bold 18px arial, sans-serif;
-  color: transparent;
-  text-shadow: 0.1px 0.8px 1px yellow, 0 0 0 black, 0.1px 0.8px 1px yellow;
-
-  position: absolute;
-  z-index: 0.999;
-  left: 42%;
-  top: 60%;
-  margin-left: 70px;
-
-  letter-spacing: 2.5px;
-
-  transition: all 0.3s ease 0s;
+    font: bold 18px arial, sans-serif;
+    color: transparent;
+    letter-spacing: 2.5px;
+    text-shadow: 0.1px 0.8px 1px yellow, 0 0 0 black, 0.1px 0.8px 1px yellow;
 }
 
-#link-jogar:hover {
-      background-color: black;
-      box-shadow: 0px 15px 20px black;
-      color: red;
-      text-shadow: 0.1px 0.8px 1px red, 0 0 0 white, 0.1px 0.8px 1px red;
-      transform: translateY(-7px);
+#botao-start:hover {
+    background-color: black;
+    box-shadow: 0px 15px 20px black;
+    color: red;
+    text-shadow: 0.1px 0.8px 1px red, 0 0 0 white, 0.1px 0.8px 1px red;
+    transform: translateY(-7px);
 }
