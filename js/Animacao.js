@@ -68,19 +68,6 @@ class Animacao {
 
     }
 
-    limparTela() {
-        // atribuido o context a uma letiavel
-        let contexto = this.contexto;
-
-        // clearRect remove desenhos do canvas
-        let x             = 0; // inicio - largura
-        let y             = 0; // inicio - altura
-        let larguraCanvas = contexto.canvas.width;  // fim - largura
-        let alturaCanvas  = contexto.canvas.height; // fim - altura
-
-        contexto.clearRect(x, y, larguraCanvas, alturaCanvas);
-    }
-
     excluirSprite(sprite) {
         this.spritesExcluir.push(sprite);
     }
