@@ -1,5 +1,5 @@
 const SOM_EXPLOSAO = new Audio();
-SOM_EXPLOSAO.src = 'snd/explosao.mp3';
+SOM_EXPLOSAO.src = 'dist/snd/explosao.mp3';
 SOM_EXPLOSAO.volume = 0;
 SOM_EXPLOSAO.load();
 

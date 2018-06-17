@@ -1,16 +1,17 @@
 let canvas = document.querySelector("#meu-canvas");
 let contexto = canvas.getContext("2d");
 let imagens = {
-    espaco: 'img/fundo-espaco.png',
-    estrelas: 'img/fundo-estrelas.png',
-    nuvens: 'img/fundo-nuvens.png',
-    nave: 'img/nave-spritesheet.png',
-    ovni: 'img/ovni.png',
-    explosao: 'img/explosao.png',
+    espaco: 'dist/img/fundo-espaco.png',
+    estrelas: 'dist/img/fundo-estrelas.png',
+    nuvens: 'dist/img/fundo-nuvens.png',
+    nave: 'dist/img/nave-spritesheet.png',
+    ovni: 'dist/img/ovni.png',
+    explosao: 'dist/img/explosao.png',
 }
 
 let musicaAcao;
 let imagensCarregadas = 0;
+
 let totalImagens = 0;
 let animacao;
 let teclado;
@@ -23,6 +24,8 @@ let criadorInimigos;
 let painel;
 
 function carregarImagens() {
+    console.log("tes2te39");
+    
     for(let i in imagens) {
         let img = new Image();
         img.src = imagens[i];
@@ -34,7 +37,7 @@ function carregarImagens() {
 
 function carregarMusicas() {
     musicaAcao = new Audio();
-    musicaAcao.src = 'snd/musica-acao.mp3';
+    musicaAcao.src = 'dist/snd/musica-acao.mp3';
     musicaAcao.load();
     musicaAcao.volume = 0;
     musicaAcao.loop = true;

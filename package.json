@@ -1,0 +1,25 @@
+{
+  "name": "canvas-game",
+  "version": "1.3.0",
+  "description": "Jogo feito com javascript canvas",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/good9ght/html5-javascript-canvas.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/good9ght/html5-javascript-canvas/issues"
+  },
+  "homepage": "https://github.com/good9ght/html5-javascript-canvas#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglifyes": "^0.1.3",
+    "pump": "^3.0.0"
+  }
+}
