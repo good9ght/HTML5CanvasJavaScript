@@ -1,4 +1,5 @@
-# HTML5 Canvas e Javascript
-Fiz com base no livro Casa do Código - HTML5 Canvas e Javascript.
+# Jogo JavaScript Canvas
 
-Parte do material está defasado, ou melhor dizendo, não está de acordo com o ES6.
+Jogo feito com base no livro da Casa do Código - HTML5 Canvas e Javascript.
+
+Código adaptado para ES2015.
