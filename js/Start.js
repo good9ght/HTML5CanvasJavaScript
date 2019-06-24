@@ -234,13 +234,13 @@ function gameOver() {
         // Fundo
         contexto.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
 
-        // Texto "SE FODEU"
+        // Texto "You Died"
         contexto.save();
         contexto.fillStyle = 'white';
         contexto.strokeStyle = 'black';
         contexto.font = '70px sans-serif';
-        contexto.fillText('SE FODEU', 70, 200);
-        contexto.strokeText('SE FODEU', 70, 200);
+        contexto.fillText('You Died', 70, 200);
+        contexto.strokeText('You Died', 70, 200);
         contexto.restore();
 
         // botão "Start"
