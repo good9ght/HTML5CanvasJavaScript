@@ -13,9 +13,7 @@ body {
 }
 
 #botao-start {
-    /* Inicia oculto */
     display: none;
-
     width:70px;
     height: 70px;
     border-radius: 70px;
@@ -23,16 +21,15 @@ body {
     box-shadow: 1px 1px 1px black;
     background: red;
     position: absolute;
-    left: 42%;
-    top: 55%;
-    margin-left: 70px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     transition: all 0.3s ease 0s;
     cursor: pointer;
 
     font: bold 18px arial, sans-serif;
-    color: transparent;
+    color: yellow;
     letter-spacing: 2.5px;
-    text-shadow: 0.1px 0.8px 1px yellow, 0 0 0 black, 0.1px 0.8px 1px yellow;
 }
 
 #botao-start:hover {
