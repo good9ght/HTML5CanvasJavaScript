@@ -37,19 +37,7 @@ class Ovni {
       { x: this.x + 20, y: this.y + 23, largura: 25, altura: 7 },
     ]
 
-    // Mostrando a hitbox
-    // for(let i in retangulos) {
-    //   this.context.save()
-    //   this.context.strokeStyle = "yellow"
-    //   this.context.strokeRect(
-    //       retangulos[i].x,
-    //       retangulos[i].y,
-    //       retangulos[i].largura,
-    //       retangulos[i].altura
-    //   )
-    //
-    //   this.context.restore()
-    // }
+    this.showHitbox(retangulos)
 
     return retangulos
   }
@@ -65,6 +53,21 @@ class Ovni {
       // Explosão
       let explosao = new Explosao(this.context, this.imgExplosao, this.x, this.y)
       this.animacao.novoSprite(explosao)
+    }
+  }
+  
+  showHitbox(retangulos) {
+    for(let i in retangulos) {
+      this.context.save()
+      this.context.strokeStyle = "yellow"
+      this.context.strokeRect(
+          retangulos[i].x,
+          retangulos[i].y,
+          retangulos[i].largura,
+          retangulos[i].altura
+      )
+    
+      this.context.restore()
     }
   }
 }

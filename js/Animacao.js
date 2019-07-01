@@ -65,7 +65,6 @@ class Animacao {
       // chamando a função em outro escopo
       this.proximoFrame()
     })
-
   }
 
   excluirSprite(sprite) {
@@ -73,7 +72,7 @@ class Animacao {
   }
 
   excluirProcessamento(processamento) {
-    this.processamentosExcluir.push(sprite)
+    this.processamentosExcluir.push(processamento)
   }
 
   processarExclusoes() {

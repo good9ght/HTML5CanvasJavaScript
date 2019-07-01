@@ -36,11 +36,13 @@ function carregarMusicas() {
   musicaAcao = new Audio()
   musicaAcao.src = 'snd/musica-acao.mp3'
   musicaAcao.load()
-  musicaAcao.volume = 0
+  musicaAcao.volume = 1
   musicaAcao.loop = true
 }
 
 function carregando() {
+  const ready = imagensCarregadas + 1 == totalImagens;
+  
   contexto.save()
   // Fundo
   contexto.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height)
@@ -49,8 +51,12 @@ function carregando() {
   contexto.fillStyle = 'white'
   contexto.strokeStyle = 'black'
   contexto.font = '50px sans-serif'
-  contexto.fillText("Loading...", 150, 200)
-  contexto.strokeText("Loading...", 150, 200)
+
+  if (ready) {
+    contexto.fillText('Ready', 180, 200)
+  } else {
+    contexto.fillText('Loading...', 150, 200)
+  }
 
   imagensCarregadas++
 
@@ -62,7 +68,7 @@ function carregando() {
 
   contexto.restore()
 
-  if (imagensCarregadas == totalImagens) {
+  if (ready) {
     iniciarObjetos()
     mostrarLinkJogar()
   }

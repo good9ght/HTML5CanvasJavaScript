@@ -1,6 +1,6 @@
 const SOM_EXPLOSAO = new Audio()
 SOM_EXPLOSAO.src = 'snd/explosao.mp3'
-SOM_EXPLOSAO.volume = 0
+SOM_EXPLOSAO.volume = 1
 SOM_EXPLOSAO.load()
 
 class Explosao {

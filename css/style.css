@@ -19,11 +19,11 @@ body {
     border-radius: 70px;
     border: none;
     box-shadow: 1px 1px 1px black;
-    background: red;
+    background: #d64a31;
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 55%;
+    transform: translateX(-50%);
     transition: all 0.3s ease 0s;
     cursor: pointer;
 
@@ -35,7 +35,5 @@ body {
 #botao-start:hover {
     background-color: black;
     box-shadow: 0px 15px 20px black;
-    color: red;
-    text-shadow: 0.1px 0.8px 1px red, 0 0 0 white, 0.1px 0.8px 1px red;
-    transform: translateY(-7px);
+    color: #d64a31;
 }
