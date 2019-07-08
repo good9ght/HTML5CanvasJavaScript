@@ -36,7 +36,7 @@ function carregarMusicas() {
   musicaAcao = new Audio()
   musicaAcao.src = 'snd/musica-acao.mp3'
   musicaAcao.load()
-  musicaAcao.volume = 1
+  musicaAcao.volume = 0.2
   musicaAcao.loop = true
 }
 
@@ -49,7 +49,6 @@ function carregando() {
 
   // Texto "Carregando"
   contexto.fillStyle = 'white'
-  contexto.strokeStyle = 'black'
   contexto.font = '50px sans-serif'
 
   if (ready) {
@@ -151,11 +150,9 @@ function pausarJogo() {
 
     // Escrever "Pause"
     contexto.save()
-    contexto.fillStyle = "white"
-    contexto.strokeStyle = "black"
-    contexto.font = "50px sans-serif"
-    contexto.fillText("Pause", 160, 200)
-    contexto.strokeText("Pause", 160, 200)
+    contexto.fillStyle = 'white'
+    contexto.font = '50px sans-serif'
+    contexto.fillText("Pause", 180, 200)
     contexto.restore()
   }
   else {
@@ -243,10 +240,8 @@ function gameOver() {
     // Texto "You Died"
     contexto.save()
     contexto.fillStyle = 'white'
-    contexto.strokeStyle = 'black'
     contexto.font = '70px sans-serif'
-    contexto.fillText('You Died', 70, 200)
-    contexto.strokeText('You Died', 70, 200)
+    contexto.fillText('You Died', 110, 200)
     contexto.restore()
 
     // botão "Start"
