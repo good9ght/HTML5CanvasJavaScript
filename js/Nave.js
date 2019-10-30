@@ -65,8 +65,7 @@ class Nave {
         { x: this.x + 25, y: this.y + 19, largura: 9, altura: 13 }
       ]
 
-    // Mostrando a hitbox
-    this.showHitbox(retangulos)
+    // this.exibirHitbox(retangulos)
 
     return retangulos
   }
@@ -109,7 +108,7 @@ class Nave {
     this.y = this.context.canvas.height - 48
   }
 
-  showHitbox(retangulos) {
+  exibirHitbox(retangulos) {
     for (let i in retangulos) {
       this.context.save()
       this.context.strokeStyle = "yellow"
